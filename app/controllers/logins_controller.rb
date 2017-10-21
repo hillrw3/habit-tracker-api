@@ -1,12 +1,10 @@
 class LoginsController < ApplicationController
 
   def create
-    user = User.find_by(username: params[:username])
+    token = User.authenticate(params[:username], params[:password])
 
-    if !(user && user.authenticate(params[:password]))
-      return render status: :unauthorized
-    end
+    return render status: :unauthorized unless token
 
-    render json: {token: 'badge'}, status: :created
+    render json: {token: token}, status: :created
   end
 end

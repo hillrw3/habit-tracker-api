@@ -14,5 +14,12 @@ describe LoginsController do
         expect(parsed_body['token']).not_to be_nil
       end
     end
+
+    context 'on failure' do
+      it 'return a 401' do
+        response = post :create, params: {}
+        expect(response.status).to eq 401
+      end
+    end
   end
 end
