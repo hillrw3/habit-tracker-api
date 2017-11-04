@@ -7,4 +7,14 @@ module ObjectCreation
 
     User.create!(attributes)
   end
+
+  def create_habit(options={})
+    user_id = options[:user_id] || create_user.id
+    attributes = {
+        title: 'go on a run',
+        user_id: user_id
+    }.merge(options)
+
+    Habit.create!(attributes)
+  end
 end
