@@ -4,6 +4,6 @@ class HabitsController < ApplicationController
 
     return render status: :unauthorized unless user
 
-    render json: user.habits.as_json(only: :title)
+    render json: user.habits.as_json(only: [:id, :title])
   end
 end
