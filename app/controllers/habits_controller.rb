@@ -1,9 +1,12 @@
 class HabitsController < ApplicationController
+
   def index
-    user = User.find_by(api_token: request.headers['X-AUTH-TOKEN'])
+    render json: current_user.habits.as_json(only: [:id, :title, :target_frequency, :actual_frequency])
+  end
 
-    return render status: :unauthorized unless user
+  def perform
+    Habit.find(params[:id]).increment(:actual_frequency, 1).save
 
-    render json: user.habits.as_json(only: [:id, :title])
+    render status: :no_content
   end
 end

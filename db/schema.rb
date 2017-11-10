@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171104184131) do
+ActiveRecord::Schema.define(version: 20171110035803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 20171104184131) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "target_frequency", default: 1
+    t.integer "actual_frequency", default: 0
     t.index ["user_id"], name: "index_habits_on_user_id"
   end
 

@@ -1,4 +1,5 @@
 class LoginsController < ApplicationController
+  skip_before_action :authenticate_user
 
   def create
     token = User.authenticate(params[:username], params[:password])
