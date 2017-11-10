@@ -1,24 +1,8 @@
-# README
+# Habit Tracker API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The goal of Habit Tracker is to encourage people to build sustainable, weekly habits. This is done by entering a set of habits with how many times you want to do each one per week (e.g. go on a jog twice a week). 
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Features to be worked on:
+* Historical tracking of habit completion
+* Automatically prompt user to roll habits to next week
+* Encouragement reminders to push users to complete goals
