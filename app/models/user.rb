@@ -1,3 +1,5 @@
+require_relative '../../lib/calendar'
+
 class User < ApplicationRecord
   has_secure_password
 
@@ -11,5 +13,9 @@ class User < ApplicationRecord
     token = SecureRandom.base64
     user.update(api_token: token)
     return token
+  end
+
+  def current_habits
+    habits.where('created_at >= ?', Calendar.beginning_of_week)
   end
 end

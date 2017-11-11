@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative '../../lib/calendar'
 
 describe User do
   describe '.authenticate' do
@@ -17,6 +18,20 @@ describe User do
       it 'returns nothing' do
         expect(User.authenticate('', '')).to be_falsey
       end
+    end
+  end
+
+  describe '#current_habits' do
+    it 'returns habits created in the current week' do
+      allow(Calendar).to receive(:beginning_of_week) { 3.days.ago.to_date }
+
+      user = create_user
+      current_habit = create_habit(created_at: [1,2,3].sample.days.ago, user_id: user.id)
+      old_habit = create_habit(created_at: 5.days.ago, user_id: user.id)
+
+      current_habits = user.current_habits
+      expect(current_habits).to include(current_habit)
+      expect(current_habits).not_to include(old_habit)
     end
   end
 end

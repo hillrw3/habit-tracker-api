@@ -3,10 +3,12 @@ require 'rails_helper'
 describe HabitsController do
   describe 'GET index' do
     context 'with a valid token' do
-      it 'returns a list of habits for user' do
+      it 'returns a list of habits created in the current week' do
         user = create_user(api_token: 'token')
         habit_1 = create_habit(title: 'go on a run', user_id: user.id, target_frequency: 2, actual_frequency: 1)
         habit_2 = create_habit(title: 'vacuum', user_id: user.id, target_frequency: 1)
+        old_habit = create_habit(user_id: user.id, created_at: 2.weeks.ago)
+        other_user_habit = create_habit
 
         request.headers.merge!({'X-AUTH-TOKEN' => user.api_token})
         response = get :index
