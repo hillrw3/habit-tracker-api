@@ -5,8 +5,11 @@ class HabitsController < ApplicationController
   end
 
   def perform
-    Habit.find(params[:id]).increment(:actual_frequency, 1).save
+    habit = current_user.habits.find_by(id: params[:id])
 
+    return render status: :forbidden unless habit
+
+    habit.increment(:actual_frequency, 1).save
     render status: :no_content
   end
 end

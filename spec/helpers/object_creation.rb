@@ -8,6 +8,10 @@ module ObjectCreation
     User.create!(attributes)
   end
 
+  def create_user_with_token(options={})
+    create_user(options.merge(api_token: SecureRandom.base64))
+  end
+
   def create_habit(options={})
     user_id = options[:user_id] || create_user.id
     attributes = {
