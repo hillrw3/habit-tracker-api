@@ -10,7 +10,7 @@ describe HabitsController do
         old_habit = create_habit(user_id: user.id, created_at: 2.weeks.ago)
         other_user_habit = create_habit
 
-        request.headers.merge!({'X-AUTH-TOKEN' => user.api_token})
+        add_token_to_request(user.api_token)
         response = get :index
 
         expect(response.status).to eq 200
@@ -24,7 +24,7 @@ describe HabitsController do
 
     context 'without a valid token' do
       it 'returns a 401' do
-        request.headers.merge!({'X-AUTH-TOKEN' => 'some made up token'})
+        add_token_to_request('some bad token')
         response = get :index
 
         expect(response.status).to eq 401
@@ -32,12 +32,29 @@ describe HabitsController do
     end
   end
 
+  describe 'POST #create' do
+    it 'creates a new habit for the authenticated user' do
+      user = create_user_with_token
+
+      add_token_to_request(user.api_token)
+
+      expect { post :create, params: {habit: {title: 'my new habit', target_frequency: 5}} }.to change {Habit.count}.by(1)
+
+      habit = JSON.parse(response.body)
+
+      expect(habit['user_id']).to eq user.id
+      expect(habit['title']).to eq 'my new habit'
+      expect(habit['target_frequency']).to eq 5
+      expect(habit['actual_frequency']).to eq 0
+    end
+  end
+
   describe 'PUT #perform' do
     it 'increments the actual_frequency of the habit' do
-      user = create_user(api_token: 'token')
+      user = create_user_with_token
       habit = create_habit(actual_frequency: 5, user_id: user.id)
 
-      request.headers.merge!('X-AUTH-TOKEN' => user.api_token)
+      add_token_to_request(user.api_token)
 
       put :perform, params: {id: habit.id}
 
@@ -52,7 +69,7 @@ describe HabitsController do
         original_actual_frequency = 3
         habit = create_habit(actual_frequency: original_actual_frequency)
 
-        request.headers.merge!({'X-AUTH-TOKEN' => user.api_token})
+        add_token_to_request(user.api_token)
 
         put :perform, params: {id: habit.id}
 
