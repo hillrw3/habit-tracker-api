@@ -7,7 +7,7 @@ class HabitsController < ApplicationController
   def create
     habit = Habit.new(habit_params)
 
-    habit.save
+    return render json: habit.errors.as_json, status: :unprocessable_entity unless habit.save
 
     render json: habit.as_json
   end

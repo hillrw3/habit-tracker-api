@@ -47,6 +47,17 @@ describe HabitsController do
       expect(habit['target_frequency']).to eq 5
       expect(habit['actual_frequency']).to eq 0
     end
+
+    it 'validates that a title is present' do
+      user = create_user_with_token
+      add_token_to_request(user.api_token)
+
+      expect { post :create, params: {habit: {target_frequency: 1}} }.to change {Habit.count}.by(0)
+      error = JSON.parse(response.body)
+
+      expect(response.status).to eq 422
+      expect(error['title']).to match_array "can't be blank"
+    end
   end
 
   describe 'PUT #perform' do
