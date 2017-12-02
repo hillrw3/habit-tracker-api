@@ -1,0 +1,6 @@
+<h1>You're getting close!</h1>
+<h3>Here are the habits that need a little more love this week:</h3>
+
+<% @unfinished_habits.each do |habit| %>
+  <p><%= habit.actual_frequency %>/<%= habit.target_frequency %> <%= habit.title %></p>
+<% end %>

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe UsersController do
   describe 'POST #create' do
-    let(:user_params) { {user: {username: 'cheeks', password: 'superSecur3', password_confirmation: 'superSecur3'}} }
+    let(:user_params) { {user: {email: 'cheeks@blah.com', password: 'superSecur3', password_confirmation: 'superSecur3'}} }
 
     it 'creates a new user' do
       expect { post :create, params: user_params }.to change { User.count }.by(1)

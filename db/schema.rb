@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110035803) do
+ActiveRecord::Schema.define(version: 20171202191424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,8 +25,13 @@ ActiveRecord::Schema.define(version: 20171110035803) do
     t.index ["user_id"], name: "index_habits_on_user_id"
   end
 
+  create_table "super_habits", force: :cascade do |t|
+    t.integer "habit_id"
+    t.integer "child_id"
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string "username"
+    t.string "email"
     t.string "password_digest"
     t.string "api_token"
     t.datetime "created_at", null: false

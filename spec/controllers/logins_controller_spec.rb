@@ -4,7 +4,7 @@ describe LoginsController do
   describe 'POST #create' do
     context 'on success' do
       it 'returns a token' do
-        params = {username: 'bob', password: 'hello'}
+        params = {email: 'bob@blah.com', password: 'hello'}
         create_user(params)
 
         response = post :create, params: params

@@ -5,7 +5,7 @@ describe User do
   describe '.authenticate' do
     context 'when the credentials match an existing user' do
       it 'returns a token that has been saved to the user' do
-        user = create_user({username: 'bill', password: 'password'})
+        user = create_user({email: 'bill@example.com', password: 'password'})
 
         returned_token = User.authenticate('bill', 'password')
         user.reload
