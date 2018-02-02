@@ -21,5 +21,15 @@ describe HabitReporterService do
       expect(email.body).not_to include finished_habit.title
       expect(email.body).not_to include old_unfinished_habit.title
     end
+
+    it 'does not send an email if the user has no unfinished emails' do
+      create_user
+
+      expect {
+        perform_enqueued_jobs do
+          HabitReporterService.send_reminder
+        end
+      }.to change { ActionMailer::Base.deliveries.size }.by(0)
+    end
   end
 end
