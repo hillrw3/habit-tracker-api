@@ -13,6 +13,6 @@ class User < ApplicationRecord
 
     token = SecureRandom.base64
     user.update(api_token: token)
-    return token
+    token
   end
 end
